@@ -1,3 +1,8 @@
+import lt.viko.eif.rcepauskas.blog.Blog;
+import lt.viko.eif.rcepauskas.blog.FileService;
+import lt.viko.eif.rcepauskas.blog.JaxbTransformer;
+
+import javax.xml.bind.JAXBException;
 import java.net.*;
 import java.io.*;
 
@@ -8,6 +13,11 @@ public class JavaClient {
     private Socket clientSocket;
     private BufferedOutputStream  out;
     private BufferedInputStream in;
+    private final FileService fileService;
+
+    public JavaClient() {
+        fileService = new FileService();
+    }
 
     /**
      * Connects to server with specified ip and port address
@@ -18,23 +28,22 @@ public class JavaClient {
     public void startConnection(String ip, int port) throws IOException {
         clientSocket = new Socket(ip, port);
         System.out.println(String.format("Connected to %s:%d", ip, port));
-        out = new BufferedOutputStream(new FileOutputStream("blog.xml"));
         in = new BufferedInputStream(new BufferedInputStream(clientSocket.getInputStream()));
-
-        receiveFile();
     }
 
-    private void receiveFile() throws IOException {
-        byte[] b = new byte[8 * 1024];
-
-        int len;
-        while ((len = in.read(b)) != -1) {
-            out.write(b, 0, len);
-        }
-
-        System.out.println("File received");
+    /**
+     * Receives file from server
+     * @param fileName received file's name
+     * @throws FileNotFoundException
+     */
+    public void receiveFile(String fileName) throws FileNotFoundException {
+        out = new BufferedOutputStream(new FileOutputStream(fileName));
+        fileService.receiveFile(in, out);
     }
 
+    /**
+     * closes socket connection and input, output buffers
+     */
     public void stopConnection() {
         if (clientSocket.isConnected()) {
             try {
