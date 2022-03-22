@@ -11,21 +11,24 @@ public class Main {
         try {
             javaClient.startConnection("127.0.0.1", 6666);
             javaClient.receiveFile("blog.xml");
-
-            if (new File("blog.xml").exists()) {
-                Blog blog = (Blog) JaxbTransformer.xmlToPojo("blog.xml", Blog.class);
-                System.out.println(blog);
-            }
-        }
-        catch (JAXBException ex) {
-            System.out.println("Jaxb transformation error: " + ex.getMessage());
-            ex.printStackTrace();
         }
         catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         finally {
             javaClient.stopConnection();
+        }
+
+        try {
+            if (new File("blog.xml").exists()) {
+                if (SchemaValidator.isXmlValid("blog.xml", "blog.xsd")) {
+                    Blog blog = (Blog) JaxbTransformer.xmlToPojo("blog.xml", Blog.class);
+                    System.out.println(blog);
+                }
+            }
+        }
+        catch (JAXBException ex) {
+            System.out.println("Jaxb transformation error: " + ex.getMessage());
         }
     }
 }
