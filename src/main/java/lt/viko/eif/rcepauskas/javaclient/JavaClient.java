@@ -1,12 +1,9 @@
 package lt.viko.eif.rcepauskas.javaclient;
 
-import lt.viko.eif.rcepauskas.blog.Blog;
 import lt.viko.eif.rcepauskas.blog.FileService;
-import lt.viko.eif.rcepauskas.blog.JaxbTransformer;
 
-import javax.xml.bind.JAXBException;
-import java.net.*;
 import java.io.*;
+import java.net.Socket;
 
 /**
  * This class lets you connect to a tcp server
