@@ -1,3 +1,5 @@
+package lt.viko.eif.rcepauskas.javaclient;
+
 import lt.viko.eif.rcepauskas.blog.Blog;
 import lt.viko.eif.rcepauskas.blog.FileService;
 import lt.viko.eif.rcepauskas.blog.JaxbTransformer;
@@ -33,11 +35,11 @@ public class JavaClient {
 
     /**
      * Receives file from server
-     * @param fileName received file's name
+     * @param filePath path to file
      * @throws FileNotFoundException
      */
-    public void receiveFile(String fileName) throws FileNotFoundException {
-        out = new BufferedOutputStream(new FileOutputStream(fileName));
+    public void receiveFile(String filePath) throws FileNotFoundException {
+        out = new BufferedOutputStream(new FileOutputStream(filePath));
         fileService.receiveFile(in, out);
     }
 

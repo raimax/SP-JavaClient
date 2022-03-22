@@ -1,3 +1,5 @@
+package lt.viko.eif.rcepauskas.javaclient;
+
 import lt.viko.eif.rcepauskas.blog.Blog;
 import lt.viko.eif.rcepauskas.blog.JaxbTransformer;
 
@@ -10,7 +12,7 @@ public class Main {
 
         try {
             javaClient.startConnection("127.0.0.1", 6666);
-            javaClient.receiveFile("blog.xml");
+            javaClient.receiveFile("src\\main\\resources\\blog.xml");
         }
         catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -20,9 +22,9 @@ public class Main {
         }
 
         try {
-            if (new File("blog.xml").exists()) {
-                if (SchemaValidator.isXmlValid("blog.xml", "blog.xsd")) {
-                    Blog blog = (Blog) JaxbTransformer.xmlToPojo("blog.xml", Blog.class);
+            if (new File("src\\main\\resources\\blog.xml").exists()) {
+                if (SchemaValidator.isXmlValid("src\\main\\resources\\blog.xml", "src\\main\\resources\\blog.xsd")) {
+                    Blog blog = (Blog) JaxbTransformer.xmlToPojo("src\\main\\resources\\blog.xml", Blog.class);
                     System.out.println(blog);
                 }
             }
