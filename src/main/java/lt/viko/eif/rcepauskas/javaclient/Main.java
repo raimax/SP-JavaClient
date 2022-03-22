@@ -27,6 +27,9 @@ public class Main {
                     Blog blog = (Blog) JaxbTransformer.xmlToPojo("src\\main\\resources\\blog.xml", Blog.class);
                     System.out.println(blog);
                 }
+                else {
+                    System.out.println("Xml validation failed");
+                }
             }
         }
         catch (JAXBException ex) {
